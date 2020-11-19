@@ -1,0 +1,21 @@
+# Ignore Python remnants 
+.ipynb_checkpoints
+__pycache__
+
+
+# Ignore my configuration settings
+my_config/
+
+# Ignore chromedriver
+chromedriver.exe
+
+# -- IGNORE SELECT DATA FILES --
+# Data backup: data.zip (277MB).
+# Data directories: streamer_info/ (12MB), streamer_logos/ (248MB), games/ (10MB) all of which contain 3154 small files.
+# Lots of reorganizing and removing duplicate files can be done --
+# eventually I would like to merge the small files and remove from gitignore. 
+data.zip
+streamer_info/
+streamer_logos/
+games/
+# ------------------------------

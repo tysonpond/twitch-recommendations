@@ -1,0 +1,362 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower:400');
+
+/* --------- GLOBAL STYLES --------- */
+:root {
+	--col1: #6441a5; /* MAIN COLOR: HEADINGS, NAV-LINKS, SOCIAL ICONS */
+	--col2: black; /* HOME SUBTITLE, PROJECT TITLES, NAV-LINK ACTIVE+HOVER EFFECT, 
+					SECONDARY BUTTON COLOR*/
+	--col3: #f0f0f0; /* BACKGROUND COLOR */
+	--col4: white; /* NAVBAR, CARDS, BUTTON INVERTED COLOR */
+	--col5: #6441a5; /* PRIMARY BUTTON COLOR */
+	--font1: "Roboto"; /* body text, section headers & subheaders, links+navbar-text */
+	--font2: "Indie Flower"; /* Button text, project titles, skill categories */
+	--f1w1: 400; /* body text, subheaders (regular) */
+	--f1w2: 700; /* section headers, links+navbar-text (bold) */
+	--f2w1: 400; /* font 2 weight */
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font1), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: var(--fw1);
+    background-color: var(--col3);
+    font-size: 18px;
+}
+
+li {
+	list-style:  none;
+}
+
+a, a:hover {
+	text-decoration: none;
+}
+
+a {
+	color: var(--col1) !important;
+	font-weight: var(--f1w2);
+}
+
+main {
+	margin-top: 64px; /* offset by navbar height */
+}
+
+h1 {
+	font-weight: var(--f1w2);
+	color: var(--col1);
+}
+
+.section {
+	margin-bottom: 40px;
+}
+
+.btn {
+	height: 36px;
+	background-color: transparent !important;
+	border: 3px solid var(--col) !important; 
+	border-radius: 0% !important;
+	color: var(--col) !important;
+	font-family: var(--font1);
+	text-transform: uppercase;
+	font-weight: var(--f1w2);
+	margin-bottom: 6px;
+	margin-top: : 0.6em;
+	transition: box-shadow 450ms ease-in-out, color 750ms ease-in-out;
+}
+
+.btn:hover {
+	color: var(--col4) !important;
+	outline: 0 !important;
+	box-shadow: 0 0 40px 40px var(--col) inset;
+}
+/* --------- END GLOBAL STYLES --------- */
+
+
+/* --------- NAVBAR --------- */
+.navbar-brand > span {
+	padding-left: 2px;
+	font-family: var(--font2);
+}
+
+.navbar {
+	box-shadow: 0 0.125rem 0.25rem 0 rgba(0,0,0,.11);
+	background: var(--col4) !important;
+}
+
+.navbar-toggler {
+	border: 0 !important;
+}
+
+.navbar-brand {
+	font-size: 1.5rem;
+}
+
+.nav-link {
+	text-transform: uppercase;
+	padding: 0.5rem !important;
+}
+
+.nav-link.active {
+	color: var(--col2) !important;
+}
+
+.nav {
+ 	margin-right: calc(8.33% - 1rem) !important;
+}
+
+/* --------- NAV-LINK ANIMATION --------- */
+@media only screen and (min-width: 768px){
+	.nav-link {
+		position: relative !important;
+		overflow: hidden;
+	}
+
+	.nav-link::before, .nav-link::after {
+	  transition: all 600ms ease-in-out;
+	  height: 6px;
+	  content: "";
+	  position: absolute;
+	  opacity: 0;
+	  background-color: var(--col2);
+	  width: calc(100% - 1rem); /* subtract any padding applied to nav links. in this case p-2*/
+	}
+
+	.nav-link::before {
+	  bottom: 0.2rem;
+	  transform: translateX(-100%);
+	}
+
+	.nav-link:hover::before {
+		transform: translateX(0%);
+		opacity: 0.75;
+	}
+
+	.nav-link::after {
+	 	top: 0.3rem;
+	 	transform: translateX(0%);
+	}
+
+	.nav-link:hover::after {
+		transform: translateX(-100%);
+		opacity: 0.75;
+	}
+}
+/* --------- END NAV-LINK ANIMATION --------- */
+/* --------- END NAVBAR --------- */
+
+/* --------- HOME SECTION --------- */
+#home {
+	min-height: 92.5vh;
+	overflow-x: hidden;
+}
+
+form {
+	min-height: 92.5vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.inputwrapper {
+	position: relative;
+}
+
+input.btn {
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+}
+
+label {
+	font-weight: 700;
+}
+
+#tags {
+	height: 33px !important;
+	margin-bottom: 25vh;
+}
+
+input[type="text"] {
+	padding: 48px !important;
+	min-width: 360px !important;
+	margin-right: 12px; 
+}
+
+/* AUTOCOMPLETE */
+.ui-autocomplete {
+	text-align: center;
+	color: gray;
+}
+.ui-helper-hidden-accessible{
+    display:none !important;
+}
+
+.rec-panel {
+	min-height: 92.5vh;
+	padding: 12px 12px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.rec-panel h3 {
+	text-align: center;
+}
+/* --------- END HOME --------- */
+
+
+
+/* --- RECOMMENDATIONS GRID --- */
+.grid {
+  position: relative;
+  height: calc(min(50vw,50vh));
+  width: calc(min(50vw,50vh));
+}
+
+.c {
+  position: absolute;
+  width: 33%;
+  height: 33%;
+}
+.c:nth-of-type(1) {
+  top: 0%;
+  left: 0%;
+}
+.c:nth-of-type(2) {
+  top: 0%;
+  left: calc((1/3)*100%);
+}
+.c:nth-of-type(3) {
+  top: 0%;
+  left: calc((2/3)*100%);
+}
+.c:nth-of-type(4) {
+  top: calc((1/3)*100%);
+  left: 0%;
+}
+.c:nth-of-type(5) {
+  top: calc((1/3)*100%);
+  left: calc((1/3)*100%);
+}
+.c:nth-of-type(6) {
+  top: calc((1/3)*100%);
+  left: calc((2/3)*100%);
+}
+.c:nth-of-type(7) {
+  top: calc((2/3)*100%);
+  left: 0%;
+}
+.c:nth-of-type(8) {
+  top: calc((2/3)*100%);
+  left: calc((1/3)*100%);
+}
+.c:nth-of-type(9) {
+  top: calc((2/3)*100%);
+  left: calc((2/3)*100%);
+}
+.c {
+  transition: all 0.5s ease-in-out;
+  border: 1px solid transparent;
+  z-index: 1;
+}
+
+.c:hover {
+  border: 1.8px solid white;
+  cursor: pointer;
+}
+
+.c.active {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s ease-in-out;
+  z-index: 2;
+}
+
+.overlay {
+	font-size: 24px;
+	padding-top: 2px;
+	padding-left: 8px;
+	color: white;
+	background-color: rgba(0,0,0,0.66);
+	width: 100%;
+	height: 100%;
+	transition: all 0.5s ease-in-out;
+	z-index: 2;
+	overflow: hidden;
+}
+
+.overlay-info {
+	font-size: 16px;
+	text-align: center;
+	opacity: 0;
+	color: white;
+	transition: all;
+	transition-delay: 0.35s;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+}
+
+.overlay.active {
+	z-index: 3;
+	background-color: rgba(0,0,0,0.44);
+	
+}
+
+.overlay-info.active {
+	z-index: 4;
+	opacity: 1;
+	
+}
+
+.streamername{
+	text-decoration: underline;
+}
+
+/* --- END RECOMMENDATIONS GRID --- */
+
+/* ----- ABOUT SECTION ----- */
+.img-container {
+	display: flex;
+	justify-content: center;
+}
+
+#about img {
+	max-width: 70vw;
+	height: auto;
+	margin: 18px 0;
+}
+
+#about p {
+	margin-bottom: 24px;
+} 
+
+/* -------- MOBILE  ----------- */
+.mobile-scroll {
+	display: none !important;
+}
+@media only screen and (max-width: 768px) {
+	.mobile-scroll {
+		display: block !important;
+	}
+	.grid {
+		height: calc(min(90vw,90vh));
+ 	    width: calc(min(90vw,90vh));
+ 	}
+}
+/* --------- END MOBILE -------- */

@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+{% block content %}
+<h3> We think you'll like these streamers </h3>
+<div class="grid">
+{% for rec in recs %}
+	<div class="c" style="background: url({{rec[1][1]}}), white; background-size:99.5% 99.5%;background-repeat: no-repeat; background-position: center;"> 
+		<div class="overlay"> {{rec[0]}} 
+			<div class="overlay-info"> 
+				<p class="streamername"> {{rec[1][0]}} </p>
+				<p> Followers: {{rec[1][2]}} </p>
+				<p> Primary game: {{rec[1][3]}} </p>
+				<p> Secondary game: {{rec[1][4]}} </p>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+﻿Field Name,Field Category,Field Description,Notes
+name,Profile,Streamer name.,
+rec_hours_streamed,Performance (last 3 months),Total hours streamed within the last 3 months.,
+rec_avg_viewers,Performance (last 3 months),Average concurrent viewers within the last 3 months.,
+rec_peak_viewers,Performance (last 3 months),Peak concurrent viewers within the last 3 months.,
+rec_hours_watched,Performance (last 3 months),Total hours watched within the last 3 months.,
+rec_followers_gained,Performance (last 3 months),Net followers gained within the last 3 months.,
+rec_followers_per_hour,Performance (last 3 months),Net followers gained per hour within the last 3 months.,This field is calculated as: rec_followers_per_hour = rec_followers_gained/rec_hours_streamed
+rec_views_gained,Performance (last 3 months),Total views gained within the last 3 months.,Views are distinct from viewers. Views is an all-time metric that counts the number of times the channel has been visited.
+rec_number_of_streams,Performance (last 3 months),Total number of streams within the last 3 months.,
+total_hours_streamed,Career,Total hours streamed.,
+career_peak_viewers,Career,Highest number of concurrent viewers during a stream.,
+total_followers,Career,Total number of followers.,
+total_views,Career,Total number of views.,Views are distinct from viewers. Views is an all-time metric that counts the number of times the channel has been visited.
+ranking,Profile,"Algorithmic ranking assigned based on: average viewers, followers, views, and stream time within the last 1 month.","Since data collection took several hours and rankings shift often, tie rankings may be present."
+language,Profile,Language of stream.,
+creation_date,Profile,Channel creation date.,
+partnered,Profile,Indicator for whether the streamer is partnered.,
+mature_content,Profile,Indicator for whether the stream may contain mature content.,
+channel_description,Profile,Text description from channel bio.,
+avg_games_streamed,Average stream,Average number of games played during a stream.,
+avg_views_gained,Average stream,Average number of views gained during a stream.,Views are distinct from viewers. Views is an all-time metric that counts the number of times the channel has been visited.
+avg_followers_gained,Average stream,Average net follower gain during a stream.,
+avg_stream_duration,Average stream,Average stream duration.,
+active_days_per_week,Career,Average number of days streamed per week.,
+unique_games_played,Career,Total number of unique games played.,
+stream_start,Average stream,Typical time for stream start.,This field may not be accurate since streamers may have irregular streaming patterns or may change their schedule.
+total_activity,Career,"Format is ""X of Y days"" where Y is the number of days since the channel metrics began being tracked and X is the number of those days for which the streamer has gone live.",

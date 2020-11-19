@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+	<head>
+	    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Twitch recommender system using machine learning"/>
+	    <title> Twitch tastes - Twitch.tv recommendation engine </title>
+
+	    <!-- Bootstrap -->
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+		<!-- jQuery full -->
+	    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	    <!-- main CSS -->
+	    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
+	    <!-- Font Awesome -->
+	    <link rel ="stylesheet" href="{{url_for('static', filename='css/all.min.css')}}">
+
+		<script type="text/javascript">
+			var availableTags = {{ data | safe }};
+			  $( function() {
+			  	
+			    
+			    function split( val ) {
+			      return val.split( /,\s*/ );
+			    }
+			    function extractLast( term ) {
+			      return split( term ).pop();
+			    }
+			 	
+			    $( "#tags" )
+			      // don't navigate away from the field on tab when selecting an item
+			      .on( "keydown", function( event ) {
+			        if ( event.keyCode === $.ui.keyCode.TAB &&
+			            $( this ).autocomplete( "instance" ).menu.active ) {
+			          event.preventDefault();
+			        }
+			      })
+			      .autocomplete({
+			        minLength: 0,
+			        source: function( request, response ) {
+  			          // delegate back to autocomplete, but extract the last term
+			          var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(extractLast(request.term) ), "i");
+				      var results = $.grep(availableTags, function(item) {
+				        return matcher.test(item.toLowerCase());
+				      });
+			          response( results.slice(0,5) ); // display top results
+			        },
+			        focus: function() {
+			          // prevent value inserted on focus
+			          return false;
+			        },
+			        select: function( event, ui ) {
+			          var terms = split( this.value );
+			          // remove the current input
+			          terms.pop();
+			          // add the selected item
+			          terms.push( ui.item.value );
+			          // add placeholder to get the comma-and-space at the end
+			          terms.push( "" );
+			          this.value = terms.join( ", " );
+			          return false;
+			        },
+			        appendTo: "#hidden-stuff"
+			      });
+			  });
+		</script>
+
+	</head>
+
+<body data-spy="scroll" data-target="#navScroll" data-offset="50">
+
+	<!-- NAV-->
+	<nav id="navScroll" class="navbar navbar-expand-md fixed-top navbar-light bg-light py-1">
+    <a class="navbar-brand py-2 offset-md-1" href="#">Twitch <span> tastes </span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item"> <a class="nav-link" href="#home">Home</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#insights">Insights</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#about">About</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#contact">Contact</a> </li>
+        </ul>
+    </div>
+	</nav> <!-- END NAV -->
+
+	<main class="container"> <!-- PAGE LAYOUT --> 
+			<div id="home" class="row section"> <!-- HOME -->
+				<div class="col-md-6">
+					<form method="POST">
+						<label for="tags"> Enter a list of one or more Twitch streamers </label> <br>
+						<div class="inputwrapper">
+						  	<input id="tags" type="text" name="tags" maxlength="10000">
+						  	<div id="hidden-stuff" style="height: 0px;"></div> <!-- hacky way to prevent weird horizontal scroll caused by autocomplete -->
+						  	<input type="submit" class="btn" style="--col:var(--col5);">
+					  	</div>
+					  	<a class="scroll-link" href="#recommendations"> <i class="fas fa-arrow-circle-down fa-2x mobile-scroll"></i> </a>
+					</form>
+				</div>
+
+				<div id="recommendations" class="col-md-6 rec-panel">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div> <!-- END HOME -->
+
+			<div id="insights" class="section">  <!-- INSIGHTS -->
+				<h1> INSIGHTS </h1>
+				<p>
+				Lorem ipsum Ea ad aliqua ea sunt adipisicing in sint in in quis sit reprehenderit Duis officia voluptate aliqua nulla eiusmod anim culpa reprehenderit nisi consectetur et labore minim officia laborum cupidatat id.
+
+				Aliquip officia exercitation exercitation proident velit irure magna amet velit deserunt nostrud in non cillum pariatur cupidatat et in pariatur proident aliqua sit Ut laborum est nisi nulla mollit aute aliqua.
+
+				Anim dolor ad sunt ad deserunt minim in dolor dolor id velit esse proident Excepteur dolor laboris anim Ut culpa id amet voluptate ut commodo consequat dolor reprehenderit cillum consequat dolor exercitation aliqua dolor sunt enim nisi.
+
+				Ut non elit voluptate exercitation esse id incididunt adipisicing dolor non laboris adipisicing sit magna laboris qui labore aliquip deserunt sit proident in et sunt id consequat dolore.
+				</p>
+			</div> <!-- END INSIGHTS -->
+
+			<div id="about" class="section">  <!-- ABOUT -->
+				<h1> ABOUT </h1>
+				<h3> Twitch </h3>
+				<p id="about-twitch">
+					<p>
+					Twitch (twitch.tv) is one of the largest live streaming websites. Hosting 3.8M broadcasts and 15M live viewers per day, Twitch competes against the likes of Facebook, Youtube, and Periscope. The platform gained popularity for its gaming live streams and maintains much of this culture today; however, new categories like: "Just Chatting", chess, music, and even programming have since began to shine. 
+					</p>
+
+					<p>
+					A critical operation for Twitch is to be able to recommend new channels and categories for users to view. Indeed, after making an account and following a few channels, you will find your homepage populated like the image below. 
+					</p>
+
+					<div class="img-container">
+					<img id="#twitchtv" src="{{url_for('static', filename='twitchtv.png')}}" alt="Live stream website recommender system">
+					</div>
+
+					<p>
+					Providing well-received and diverse recommendations (i.e. not entirely based on popularity) is beneficial to user satisfaction and overall website growth and longevity. In this project, we developed a recommendation system to suggest streamers to users.
+					</p>
+				</p>
+
+				<h3> The data </h3>
+				<p class="about-data">
+					<p>
+					We began by collecting streamer data. We used Twitch Tracker -- a website which stores data from the Twitch API (dating back to 2015) -- to identify the top 2000 English streamers based on most recent 1-month performance. We collected data on each streamer, such as their recent & career metrics, along with what games they play most frequently. 
+					</p>
+
+					<p>
+					After retrieving the top 2000 English streamers, we set aside only the top 200. We then called the Twitch API and collected their most recent 100 followers (totalling to 20k users). Finally, for each of the 20k users we called the Twitch API to retrieve the list of streamers that they follow. After some additional filtering, our final dataset consisted of ~10k unique users, ~1.9k unique streamers, and ~280k user-streamer follower pairs.
+					</p>
+				</p>
+
+				<h3> The model </h3>
+				<p id="about-model">
+					<p>
+					With our cleaned dataset in hand, we proceeded to model-building. An important characterization of our data is that it is <i> implicit feedback </i>. That is, we can only infer that a user-streamer pair is a positive interaction. An unobserved user-streamer pair could be a positive or negative interaction. With this distinction, we tried several different models for implicit feedback data, including a baseline popularity model, before settling on a hybrid collaborative filtering + content-based model which we implemented in LightFM. We found the best performance by using "percent airtime" for each unique game as an item feature.
+					</p>
+				</p>
+				
+				<h3> The web app </h3>
+				<p id="about-app"> 
+					<p>
+					To serve our model, we used Python's Flask for the backend and HTML, CSS (+Bootstrap), and JavaScript (+jQuery) for the frontend. With the help of jQuery UI autocomplete, the user may input comma separated streamer names. The application will then query our model and return the top 9 recommendations. 
+					</p>
+
+					<p>
+					If only one streamer is input, an item-based approach is used; the application returns the 9 most similar streamers to the one input. If more than one streamer is input, a user-based approach is used; the application will identify the user in our database with the most similar likes and then return their recommendations. For better user-based results, we would want to retrain the model with the addition of the user input; however, because this takes 1-2 minutes which is unsuitable for a brief demo, we use the simplified approach we've described.
+					</p>
+				</p>
+			</div> <!-- END ABOUT -->
+
+			<div id="contact" class="section"> <!-- CONTACT -->
+				<h1> CONTACT </h1>
+				<p>
+				Lorem ipsum Magna enim aliqua laborum tempor ut sed do mollit cillum in commodo irure qui minim laboris et in nostrud est consectetur consequat cillum minim aliqua dolore sed aute ex cillum aliquip voluptate ut velit consequat fugiat elit nulla cillum nulla in sint dolore dolore commodo aliqua aliqua proident consectetur in tempor in tempor non et dolor pariatur dolor enim esse exercitation aute ut adipisicing proident esse reprehenderit aliquip do officia.
+				</p>
+		    </div> <!-- END CONTACT -->
+
+		    <hr style="height:10px;border-color:black;">
+
+		    <div id="footer" class="section"> <!-- FOOTER -->
+		    	Lorem ipsum Laborum laboris est nulla qui cillum proident pariatur ea qui velit id laborum magna Duis id exercitation esse minim esse fugiat aliquip enim aliqua irure eu pariatur laborum consectetur adipisicing culpa cupidatat labore.
+		    </div> <!-- END FOOTER -->
+	</main> <!-- END LAYOUT -->
+</body>
+
+<!-- Popper.js and bootstrap.js-->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<!-- main JS -->
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+
+</html>
