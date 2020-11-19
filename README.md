@@ -56,12 +56,13 @@ If only one streamer is input, an item-based approach is used; the application r
 ## Insights
 See `EDA and Network Analysis.ipynb` for a full analysis. We show two select figures below.
 
-**Top games:** for each of the top 2k streamers we identify their all-time "primary category" (defined as the category/game with the most total airtime).
+**Top games:** For each of the top 2k streamers we identify their all-time "primary category" (defined as the category/game with the most total airtime). We plot the frequency of the top 9 categories and bin all other games into "Other".
 
 ![Twitch.tv analytics chart](figures/top_games.png)
 
 
-Below we plot a network of connections between a subset of the top Twitch streamers. Nodes represent streamers and edges indicate that they share a substantial fraction of common followers. Nodes size is proportional to the total number of hours watched among their viewers within the last 3 months. Node color represents the streamer's main game. The top two streamers (according to hours watched) for each game are labelled.
+**Streamer network:** We plot a network of connections between a subset of the top Twitch streamers. Nodes represent streamers and edges indicate that they share a substantial fraction of common followers. The network here only contains 369 nodes as opposed to 2k because we've only shown the largest connected component. Nodes size is proportional to the total number of hours watched among their viewers within the last 3 months. Node color represents the streamer's main game. The top two streamers (according to hours watched) for each game are labelled. Labels are "jittered" from their typical position to avoid overlap and black arrows are shown to indicate which nodes the labels belong to.
+
 ![Twitch social network](figures/network.png)
 
 ## To do 
