@@ -2,7 +2,9 @@
 
 ## Overview
 
-The goal of this project was to develop a recommendation engine for Twitch.tv, a popular live streaming website. Specifically, we wanted to recommend streamers for Twitch users to watch. 
+The goal of this project was to develop a recommendation engine for Twitch.tv, a popular live streaming website. Specifically, we wanted to recommend streamers for Twitch users to watch. **Check out the demo** 👇
+
+[![Youtube demo for Twitch recommendation engine](https://img.youtube.com/vi/QnJdMOX2L9s/0.jpg)](https://www.youtube.com/watch?v=QnJdMOX2L9s)
 
 ## Setup
 ### Requirements
@@ -17,7 +19,7 @@ For collecting data from Twitch Tracker we use *Selenium*. Selenium requires a d
 You can get your API key by registering an application with Twitch. Read how to get started in `Data collection 2 - Twitch API.ipynb` or read the Twitch API [developer docs](https://dev.twitch.tv/docs/api).  
 
 ### Flask app
-To run the flask app locally run the command `cd flask app` and then:
+To run the flask app locally, run the command `cd flask_app` and then:
 
 ```
 $ export FLASK_APP=app.py
@@ -48,6 +50,16 @@ After retrieving the top 2000 English streamers, we set aside only the top 200. 
 ### The model
 With our cleaned dataset in hand, we proceeded to model-building. An important characterization of our data is that it is implicit feedback . That is, we can only infer that a user-streamer pair is a positive interaction. An unobserved user-streamer pair could be a positive or negative interaction. With this distinction, we tried several different models for implicit feedback data, including a baseline popularity model, before settling on a hybrid collaborative filtering + content-based model which we implemented in LightFM. We found the best performance by using "percent airtime" for each unique game as an item feature.
 
+The table below shows the best model's performance on the validation and testing sets. We use cutoff-sensitive metrics: precision, recall, and mean average precision (P@K, R@K, and MAP@K respectively) to evaluate performance. 
+
+| Metric | Validation (K=5,10)  | Testing (K=5,10) |
+|--------------|-------|-------|
+| P@K          | 0.136, 0.103 | 0.136, 0.102 | 
+| R@K          | 0.244, 0.353 | 0.253, 0.361 |
+| MAP@K        | 0.089, 0.054 | 0.088, 0.053 |
+
+Note: validation and testing sets contained on average only 2-3 relevant items per user. Thus, a typical user can only have a precision score of 20-30% whereas recall can be up to 100%. Our results indicate our model was able to identify 25% of all relevant items within the top 5 recommendations and 36% within the top 10.
+
 ### The web app
 To serve our model, we used Python's Flask for the backend and HTML, CSS (+Bootstrap), and JavaScript (+jQuery) for the frontend. With the help of jQuery UI autocomplete, the user may input comma separated streamer names. The application will then query our model and return the top 9 recommendations.
 
@@ -70,4 +82,5 @@ See `EDA and Network Analysis.ipynb` for a full analysis. We show two select fig
    - Merge the many, small data files (in .gitignore) and upload to Github
    - Need to make `requirements.txt`. I've made changes to `Implicit` and `LightFM` packages which need to be handled.
 - Finish app & deploy to the web
+   - Turn debug mode off
 - ...
