@@ -2,13 +2,19 @@
 
 ## Overview
 
-The goal of this project was to develop a recommendation engine for Twitch.tv, a popular live streaming website. Specifically, we wanted to recommend streamers for Twitch users to watch. **Check out the demo** 👇
+The goal of this project was to develop a recommendation engine for Twitch.tv, a popular live streaming website. Specifically, we wanted to recommend streamers for Twitch users to watch. 
+
+**Check out the demo** 👇
+
+https://www.youtube.com/watch?v=QnJdMOX2L9s
 
 [![Youtube demo for Twitch recommendation engine](https://img.youtube.com/vi/QnJdMOX2L9s/0.jpg)](https://www.youtube.com/watch?v=QnJdMOX2L9s)
 
 ## Setup
 ### Requirements
-Coming soon...
+Make sure you have Python (==3.7.6 tested), pip, and Git installed. Run `pip install -r requirements.txt` to download dependencies. The versions listed are the ones I used, but you may be able to use earlier/later versions.
+
+There is one issue and it is only a requirement for `Modeling.ipynb` (**you can run the app without it**); [Implicit](https://github.com/benfred/implicit) is not-straightforward to install because (1) [I edited the source code](https://github.com/tysonpond/implicit), (2) it makes use of Cython which requires a C compiler, (3) I don't understand Cython packages at all. All I know is I encountered errors when trying to pip install directly from my repo. My fix is to (1) download a C compiler such as [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/), (2) run `git clone https://github.com/tysonpond/implicit`, (3) `cd` into the cloned directory and run `python setup.py install` to build the package.
 
 ### Data collection
 To reproduce data collection, you will need to modify `config.py` to reflect your settings (user agent, API key, etc.). 
@@ -80,7 +86,7 @@ See `EDA and Network Analysis.ipynb` for a full analysis. We show two select fig
 ## To do 
 - Improve organization & reproducibility
    - Merge the many, small data files (in .gitignore) and upload to Github
-   - Need to make `requirements.txt`. I've made changes to `Implicit` and `LightFM` packages which need to be handled.
 - Finish app & deploy to the web
    - Turn debug mode off
+- Rerun notebooks start to finish
 - ...
