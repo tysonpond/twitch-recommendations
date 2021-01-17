@@ -64,7 +64,7 @@ The table below shows the best model's performance on the validation and testing
 | R@K          | 0.244, 0.353 | 0.253, 0.361 |
 | MAP@K        | 0.089, 0.054 | 0.088, 0.053 |
 
-Note: validation and testing sets contained on average only 2-3 relevant items per user. Thus, a typical user can only have a precision score of 20-30% whereas recall can be up to 100%. Our results indicate our model was able to identify 25% of all relevant items within the top 5 recommendations and 36% within the top 10.
+Note: validation and testing sets contained on average only 2-3 relevant items per user. Thus, at K=10, a typical user can only have a precision score of 20-30% whereas recall can be up to 100%. Our results indicate our model was able to identify 25% of all relevant items within the top 5 recommendations and 36% within the top 10.
 
 ### The web app
 To serve our model, we used Python's Flask for the backend and HTML, CSS (+Bootstrap), and JavaScript (+jQuery) for the frontend. With the help of jQuery UI autocomplete, the user may input comma separated streamer names. The application will then query our model and return the top 9 recommendations.

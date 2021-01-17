@@ -78,6 +78,26 @@ h1 {
 	outline: 0 !important;
 	box-shadow: 0 0 40px 40px var(--col) inset;
 }
+
+table {
+	margin-bottom: 18px;
+}
+
+thead {
+	border-top: 4px solid black;
+	border-bottom: 2px solid black;
+}
+
+tbody > tr:last-child {
+	border-bottom: 4px solid black;
+}
+th:first-child, td:first-child {
+	border-right: 2px solid black;
+}
+
+th, td {
+	padding: 8px;
+}
 /* --------- END GLOBAL STYLES --------- */
 
 
@@ -336,15 +356,9 @@ input[type="text"] {
 	justify-content: center;
 }
 
-#about img {
-	max-width: 70vw;
-	height: auto;
-	margin: 18px 0;
-}
-
-#about p {
+/*#about p {
 	margin-bottom: 24px;
-} 
+} */
 
 /* -------- MOBILE  ----------- */
 .mobile-scroll {
