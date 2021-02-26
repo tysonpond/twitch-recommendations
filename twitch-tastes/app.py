@@ -9,7 +9,8 @@ from wtforms.validators import  ValidationError
 
 # App initialization and configuration
 app = Flask(__name__, template_folder='templates')
-app.config["SECRET_KEY"] = "MYSECRETKEY" # will set this using environment variable during deployment
+# app.config["SECRET_KEY"] = "MYSECRETKEY" # will set this using environment variable during deployment
+app.config["SECRET_KEY"] = os.environ["TWITCH_TASTES_SECRET_KEY"]
 app.config['JSON_SORT_KEYS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 10*10**6 # 10Mb limit
 
@@ -95,8 +96,7 @@ def api():
         N = min(N, 20)
 
     # check for matches
-    print(text)
-    follows = [x.strip() for x in text.split() if x.strip() in usernames]
+    follows = [x.strip() for x in text.split(",") if x.strip() in usernames]
 
     # get recommendations
     if len(follows) > 0:

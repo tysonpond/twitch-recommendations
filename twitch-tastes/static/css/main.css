@@ -327,6 +327,12 @@ th, td {
 .streamername{
 	text-decoration: underline;
 }
+
+/* prevent clicking same .c element during animation */
+.freeze {
+	pointer-events: none;
+}
+
 /* --- END RECOMMENDATIONS GRID --- */
 
 /* ----- ABOUT SECTION ----- */

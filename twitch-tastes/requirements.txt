@@ -1,0 +1,16 @@
+# general data science
+numpy==1.18.5
+pandas==1.0.4
+scikit-learn==0.23.2
+
+# computation
+scipy==1.5.4
+
+# web app
+Flask==1.1.2
+Flask-WTF==0.14.3
+WTForms==2.3.3
+gunicorn==20.0.4
+
+# models
+git+https://github.com/tysonpond/lightfm.git

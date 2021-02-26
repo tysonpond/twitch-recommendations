@@ -20,6 +20,9 @@ tqdm==4.50.2
 
 # web app
 Flask==1.1.2
+Flask-WTF==0.14.3
+WTForms==2.3.3
+gunicorn==20.0.4
 
 # misc
 textblob==0.15.3
