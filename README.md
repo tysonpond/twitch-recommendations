@@ -81,12 +81,12 @@ See `EDA and Network Analysis.ipynb` for a full analysis. We show two select fig
 
 **Streamer network:** We plot a network of connections between a subset of the top Twitch streamers. Nodes represent streamers and edges indicate that they share a substantial fraction of common followers. The network here only contains 369 nodes as opposed to 2k because we've only shown the largest connected component. Nodes size is proportional to the total number of hours watched among their viewers within the last 3 months. Node color represents the streamer's main game. The top two streamers (according to hours watched) for each game are labelled. Labels are "jittered" from their typical position to avoid overlap and black arrows are shown to indicate which nodes the labels belong to.
 
-![Twitch social network](figures/network.png)
+<img src="./figures/network.png" alt="Twitch social network" width="550" height="550"/>
 
 ## Recent changes
 - Significant overhaul of Flask app. 
-   - User's query is now stored in dynamic URL, which looks like this "./like/<streamer1>+<streamer2>+..." where streamer1, etc. are the user's "liked" streamers. 
-   - API available, e.g. "./api?streamers=<streamer1>+<streamer2>+...?limit=20" will return 20 recommendations based on liking streamer1 and streamer2.
+   - User's query is now stored in dynamic URL, which looks like this "./like/&lt;streamer1&gt;+&lt;streamer2&gt;+..." where streamer1, etc. are the user's "liked" streamers. 
+   - API available, e.g. "./api?streamers=&&lt;streamer1&gt;+&lt;streamer2&gt;+...?limit=20" will return 20 recommendations based on liking streamer1 and streamer2.
    - Form validation & flashing error message if user's query does not match any streamers in our database.
    - App UI improved: improved sizing of images, Contact section filled in.
 - Updated streamer `image_url`s since many had went out of date.
