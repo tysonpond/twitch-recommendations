@@ -1,3 +1,10 @@
+# This (old) app version keeps track of the user's form input by saving their data in
+# the Flask session object. The new version, which we think is an improvement,
+# does this with dynamic URLs -- i.e. "./like/<username-1>+<username-2>+...".
+# The issue with this older version is that you cannot "go back" to a previous 
+# recommendation page because you lose the session data -- whereas if it's 
+# stored in the URL then it is very easy to go back.
+
 from flask import Flask, request, render_template, url_for, flash, session, redirect, json
 from recommend import recommend
 from utils import unique
@@ -20,9 +27,9 @@ df = df.set_index("name")
 
 # Form for user input
 def validate_form(form, field):
-    follows = [x.strip() for x in field.data.split(",") if x.strip() in usernames]
-    if len(follows) == 0:
-        raise ValidationError("Invalid input syntax")
+        follows = [x.strip() for x in field.data.split(",") if x.strip() in usernames]
+        if len(follows) == 0:
+            raise ValidationError("Invalid input syntax")
 
 class UsernamesForm(FlaskForm):
     username_input = StringField("Usernames", validators=[validate_form])
@@ -44,10 +51,8 @@ def index():
         if form.validate_on_submit():
             # if valid, get recommendations
             query = form.username_input.data
-            follows = [x.strip() for x in query.split(",") if x.strip() in usernames]
-            follows = unique(follows)
-            query = "+".join(follows)
-            return redirect(url_for('results', query=query))
+            session["query"] = query
+            return redirect(url_for('results'))
 
         else:
             # flash error message
@@ -56,25 +61,22 @@ def index():
             return redirect(url_for('index'))
     
 # Recommendation grid
-@app.route('/like/<query>', methods=['GET'])
-def results(query):
-    follows = query.split("+")
+@app.route('/results', methods=['GET'])
+def results():
+    if "query" in session:
+        query = session["query"]
+        follows = [x.strip() for x in query.split(",") if x.strip() in usernames]
+        del session["query"] 
 
-    # Validate query. If form was used, this input has already been validated.
-    # However, if url  './like/<query>'  is manually typed then <query> could be invalid.
-    if not set(follows).intersection(set(usernames)):
-        return redirect(url_for('index'))
-    
-    if set(follows).difference(set(usernames)):
         follows = unique(follows)
-        query = "+".join([x for x in follows if x in usernames])
-        return redirect(url_for('results', query=query))
-
-    recs = recommend(follows, N=9)
-    rec_data = df.loc[recs].reset_index().values.tolist()
-    rec_data = list(enumerate(rec_data, start=1)) # data to display
-
-    return render_template('results.html', data=json.dumps(usernames), recs=rec_data, form=UsernamesForm())
+        recs = recommend(follows, N=9)
+        rec_data = df.loc[recs].reset_index().values.tolist()
+        rec_data = list(enumerate(rec_data, start=1)) # data to display
+    
+        return render_template('results.html', data=json.dumps(usernames), recs=rec_data, form=UsernamesForm())
+    
+    else:
+        return redirect(url_for('index'))
 
 # API version -- allows a limit of 20 recommendations
 @app.route('/api', methods=['GET'])
@@ -95,8 +97,7 @@ def api():
         N = min(N, 20)
 
     # check for matches
-    print(text)
-    follows = [x.strip() for x in text.split() if x.strip() in usernames]
+    follows = [x.strip() for x in text.split(",") if x.strip() in usernames]
 
     # get recommendations
     if len(follows) > 0:

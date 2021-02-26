@@ -1,9 +1,10 @@
 {% extends "index.html" %}
 {% block content %}
-<h3> We think you'll like these streamers </h3>
-<div class="grid">
+{% if recs %}
+<h3> Your recommendations </h3>
+<div id="grid">
 {% for rec in recs %}
-	<div class="c" style="background: url({{rec[1][1]}}), white; background-size:99.5% 99.5%;background-repeat: no-repeat; background-position: center;"> 
+	<div class="c" style="background-image: url({{rec[1][1]}}); background-color: var(--col2); background-size: 99.5% 99.5%; background-repeat: no-repeat; background-position: center;"> 
 		<div class="overlay"> {{rec[0]}} 
 			<div class="overlay-info"> 
 				<p class="streamername"> {{rec[1][0]}} </p>
@@ -15,4 +16,5 @@
 	</div>
 {% endfor %}
 </div>
+{% endif %}
 {% endblock %}

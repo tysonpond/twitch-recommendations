@@ -1,19 +1,16 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower:400');
 
 /* --------- GLOBAL STYLES --------- */
 :root {
-	--col1: #6441a5; /* MAIN COLOR: HEADINGS, NAV-LINKS, SOCIAL ICONS */
-	--col2: black; /* HOME SUBTITLE, PROJECT TITLES, NAV-LINK ACTIVE+HOVER EFFECT, 
-					SECONDARY BUTTON COLOR*/
-	--col3: #f0f0f0; /* BACKGROUND COLOR */
-	--col4: white; /* NAVBAR, CARDS, BUTTON INVERTED COLOR */
-	--col5: #6441a5; /* PRIMARY BUTTON COLOR */
-	--font1: "Roboto"; /* body text, section headers & subheaders, links+navbar-text */
-	--font2: "Indie Flower"; /* Button text, project titles, skill categories */
-	--f1w1: 400; /* body text, subheaders (regular) */
-	--f1w2: 700; /* section headers, links+navbar-text (bold) */
-	--f2w1: 400; /* font 2 weight */
+	/* twitch color #6441a5*/
+	--col1: #8843f7; 
+	--col2: #191818;; 
+	--col3: #f0f0f0; 
+	--col4: white; 
+	--font1: "Lato"; 
+	--font2: "Indie Flower";
+	--f1w: 700; 
 }
 
 * {
@@ -41,18 +38,19 @@ a, a:hover {
 	text-decoration: none;
 }
 
-a {
+ a {
 	color: var(--col1) !important;
-	font-weight: var(--f1w2);
+	font-weight: var(--f1w);
 }
 
 main {
 	margin-top: 64px; /* offset by navbar height */
 }
 
-h1 {
-	font-weight: var(--f1w2);
+h2 {
+	font-weight: var(--f1w);
 	color: var(--col1);
+	text-transform: lowercase;
 }
 
 .section {
@@ -67,9 +65,7 @@ h1 {
 	color: var(--col) !important;
 	font-family: var(--font1);
 	text-transform: uppercase;
-	font-weight: var(--f1w2);
-	margin-bottom: 6px;
-	margin-top: : 0.6em;
+	font-weight: var(--f1w);
 	transition: box-shadow 450ms ease-in-out, color 750ms ease-in-out;
 }
 
@@ -80,19 +76,19 @@ h1 {
 }
 
 table {
-	margin-bottom: 18px;
+	margin: 30px auto;
 }
 
 thead {
-	border-top: 4px solid black;
-	border-bottom: 2px solid black;
+	border-top: 4px solid var(--col2);
+	border-bottom: 2px solid var(--col2);
 }
 
 tbody > tr:last-child {
-	border-bottom: 4px solid black;
+	border-bottom: 4px solid var(--col2);
 }
 th:first-child, td:first-child {
-	border-right: 2px solid black;
+	border-right: 2px solid var(--col2);
 }
 
 th, td {
@@ -120,13 +116,9 @@ th, td {
 	font-size: 1.5rem;
 }
 
-.nav-link {
-	text-transform: uppercase;
-	padding: 0.5rem !important;
-}
-
 .nav-link.active {
-	color: var(--col2) !important;
+	color: var(--col1) !important;
+	z-index: 2 !important;
 }
 
 .nav {
@@ -134,114 +126,104 @@ th, td {
 }
 
 /* --------- NAV-LINK ANIMATION --------- */
-@media only screen and (min-width: 768px){
-	.nav-link {
-		position: relative !important;
-		overflow: hidden;
-	}
+.nav-link  {	
+	position: relative !important;
+	margin: 0px 10px !important;
+    padding: 10px 10px !important;
+	z-index: 0;
+	text-transform: lowercase;
+	color: rgba(136, 67, 247, 0.66) !important;
+}
 
-	.nav-link::before, .nav-link::after {
-	  transition: all 600ms ease-in-out;
-	  height: 6px;
-	  content: "";
-	  position: absolute;
-	  opacity: 0;
-	  background-color: var(--col2);
-	  width: calc(100% - 1rem); /* subtract any padding applied to nav links. in this case p-2*/
-	}
-
-	.nav-link::before {
-	  bottom: 0.2rem;
-	  transform: translateX(-100%);
-	}
-
-	.nav-link:hover::before {
-		transform: translateX(0%);
-		opacity: 0.75;
-	}
-
-	.nav-link::after {
-	 	top: 0.3rem;
-	 	transform: translateX(0%);
-	}
-
-	.nav-link:hover::after {
-		transform: translateX(-100%);
-		opacity: 0.75;
-	}
+.nav-link:before {
+    position: absolute;
+    color: var(--col1);
+    top: 0px;
+    left: 0px;
+    padding: 10px;
+    overflow: hidden;
+    content: attr(alt);
+    transition: all 0.3s;
+    transform: scale(1.2);
+    opacity: 0;
+} 
+.nav-link:hover:before {	
+    transform: scale(1);
+    opacity: 1;
 }
 /* --------- END NAV-LINK ANIMATION --------- */
 /* --------- END NAVBAR --------- */
 
 /* --------- HOME SECTION --------- */
 #home {
-	min-height: 92.5vh;
-	overflow-x: hidden;
-}
-
-form {
-	min-height: 92.5vh;
+	min-height: 85vh;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	align-items: center;
+}
+/* --------- END HOME ------------ */
+
+/* --------- USER INPUT ----------- */
+.input-panel {
+	padding-top: 5vh;
+}
+
+.input-panel, .rec-panel, form {
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 }
 
-.inputwrapper {
-	position: relative;
+#username_input {
+	border: 3px solid rgba(136, 67, 247, 0.66); 
+	height: 36px;
+	padding: 2.5px 16px;
+	transition: 200ms ease-in-out;
 }
 
-input.btn {
-	position: absolute !important;
-	top: 0 !important;
-	left: 0 !important;
+#username_input:focus {
+	border-color: var(--col1);
+	outline: none;
 }
 
-label {
-	font-weight: 700;
+#username_input, #username_input + .btn {
+	vertical-align: middle
 }
 
-#tags {
-	height: 33px !important;
-	margin-bottom: 25vh;
+#username_input + .btn {
+	text-transform: lowercase;
 }
 
-input[type="text"] {
-	padding: 48px !important;
-	min-width: 360px !important;
-	margin-right: 12px; 
-}
+/* ------- END USER INPUT --------- */
 
 /* AUTOCOMPLETE */
+#autocomplete-anchor {
+	display: relative;
+	margin-bottom: 5vh;
+}
+
 .ui-autocomplete {
-	text-align: center;
-	color: gray;
-}
-.ui-helper-hidden-accessible{
-    display:none !important;
-}
-
-.rec-panel {
-	min-height: 92.5vh;
-	padding: 12px 12px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	background-color: #191818;
+	color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
 }
 
-.rec-panel h3 {
-	text-align: center;
+.ui-menu-item {
+	padding-left: 14px;
+	outline: 0.1px solid var(--col4);
 }
 /* --------- END HOME --------- */
 
 
-
 /* --- RECOMMENDATIONS GRID --- */
-.grid {
+#grid {
   position: relative;
-  height: calc(min(50vw,50vh));
-  width: calc(min(50vw,50vh));
+  height: calc(min(90vw,57.5vh));
+  width: calc(min(90vw,57.5vh));
+  overflow: hidden;
 }
 
 .c {
@@ -287,12 +269,10 @@ input[type="text"] {
 }
 .c {
   transition: all 0.5s ease-in-out;
-  border: 1px solid transparent;
   z-index: 1;
 }
 
 .c:hover {
-  border: 1.8px solid white;
   cursor: pointer;
 }
 
@@ -309,7 +289,7 @@ input[type="text"] {
 	font-size: 24px;
 	padding-top: 2px;
 	padding-left: 8px;
-	color: white;
+	color: var(--col4);
 	background-color: rgba(0,0,0,0.66);
 	width: 100%;
 	height: 100%;
@@ -322,7 +302,7 @@ input[type="text"] {
 	font-size: 16px;
 	text-align: center;
 	opacity: 0;
-	color: white;
+	color: var(--col4);
 	transition: all;
 	transition-delay: 0.35s;
 	transition-duration: 0.15s;
@@ -347,7 +327,6 @@ input[type="text"] {
 .streamername{
 	text-decoration: underline;
 }
-
 /* --- END RECOMMENDATIONS GRID --- */
 
 /* ----- ABOUT SECTION ----- */
@@ -356,21 +335,25 @@ input[type="text"] {
 	justify-content: center;
 }
 
-/*#about p {
-	margin-bottom: 24px;
-} */
+#topGames {
+	width: 100%;
+	max-width: 600px;
+	height: auto;
+}
 
-/* -------- MOBILE  ----------- */
-.mobile-scroll {
-	display: none !important;
+#network {
+	width: calc(min(90vw,80vh, 1000px));
+	height: calc(min(90vw,80vh, 1000px));
 }
-@media only screen and (max-width: 768px) {
-	.mobile-scroll {
-		display: block !important;
-	}
-	.grid {
-		height: calc(min(90vw,90vh));
- 	    width: calc(min(90vw,90vh));
- 	}
+
+/* Footer */
+#socials {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
 }
-/* --------- END MOBILE -------- */
+#socials i {
+	color: var(--col1);
+	margin: 0 15px;
+}

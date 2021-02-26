@@ -22,7 +22,7 @@
 	    <link rel ="stylesheet" href="{{url_for('static', filename='css/all.min.css')}}">
 
 		<script type="text/javascript">
-			var availableTags = {{ data | safe }};
+			var availableUsernames = {{ data | safe }};
 			  $( function() {
 			  	
 			    
@@ -33,7 +33,7 @@
 			      return split( term ).pop();
 			    }
 			 	
-			    $( "#tags" )
+			    $( "#username_input" )
 			      // don't navigate away from the field on tab when selecting an item
 			      .on( "keydown", function( event ) {
 			        if ( event.keyCode === $.ui.keyCode.TAB &&
@@ -46,7 +46,7 @@
 			        source: function( request, response ) {
   			          // delegate back to autocomplete, but extract the last term
 			          var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(extractLast(request.term) ), "i");
-				      var results = $.grep(availableTags, function(item) {
+				      var results = $.grep(availableUsernames, function(item) {
 				        return matcher.test(item.toLowerCase());
 				      });
 			          response( results.slice(0,5) ); // display top results
@@ -66,54 +66,62 @@
 			          this.value = terms.join( ", " );
 			          return false;
 			        },
-			        appendTo: "#hidden-stuff"
+			        appendTo: "#autocomplete-anchor",
+			        open: function() {
+				        $("ul.ui-menu").width( $(this).innerWidth() + 6 );
+				    },
 			      });
 			  });
 		</script>
 
 	</head>
 
-<body data-spy="scroll" data-target="#navScroll" data-offset="50">
+<body>
 
 	<!-- NAV-->
-	<nav id="navScroll" class="navbar navbar-expand-md fixed-top navbar-light bg-light py-1">
+	<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light py-1">
     <a class="navbar-brand py-2 offset-md-1" href="#">Twitch <span> tastes </span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item"> <a class="nav-link" href="#home">Home</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#about">About</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#insights">Insights</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#contact">Contact</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#home" alt="HOME">HOME</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#about" alt="ABOUT">ABOUT</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#insights" alt="INSIGHTS">INSIGHTS</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#contact" alt="CONTACT">CONTACT</a> </li>
         </ul>
     </div>
 	</nav> <!-- END NAV -->
 
 	<main class="container"> <!-- PAGE LAYOUT --> 
-			<div id="home" class="row section"> <!-- HOME -->
-				<div class="col-md-6">
-					<form method="POST">
-						<label for="tags"> Enter a list of one or more Twitch streamers </label> <br>
-						<div class="inputwrapper">
-						  	<input id="tags" type="text" name="tags" maxlength="10000">
-						  	<div id="hidden-stuff" style="height: 0px;"></div> <!-- hacky way to prevent weird horizontal scroll caused by autocomplete -->
-						  	<input type="submit" class="btn" style="--col:var(--col5);">
+			<div id="home" class="section"> <!-- HOME -->
+				<div class="input-panel">
+					<form action="/" method="POST">
+						<label for="tags"> Enter a list of one or more streamers </label> <br>
+							{% for message in get_flashed_messages() %}
+							<div class="alert alert-warning">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								{{ message }}
+							</div>
+							{% endfor %}
+						<div class="input-wrapper">
+							{{ form.csrf_token }}
+							{{ form.username_input(maxlength = 400)}}
+							<input type="submit" class="btn" style="--col:var(--col1);">
+							<div id="autocomplete-anchor"></div>
 					  	</div>
-					  	<a class="scroll-link" href="#recommendations"> <i class="fas fa-arrow-circle-down fa-2x mobile-scroll"></i> </a>
 					</form>
 				</div>
 
-				<div id="recommendations" class="col-md-6 rec-panel">
-					{% block content %}
-					{% endblock %}
+				<div id="recommendations" class="rec-panel">
+					{% block content %}{% endblock %}
 				</div>
 			</div> <!-- END HOME -->
 
 
 			<div id="about" class="section">  <!-- ABOUT -->
-				<h1> ABOUT </h1>
+				<h2> ABOUT </h1>
 				<h3> Twitch </h3>
 				<div id="about-twitch">
 					<p>
@@ -186,35 +194,38 @@
 
 
 			<div id="insights" class="section">  <!-- INSIGHTS -->
-				<h1> INSIGHTS </h1>
+				<h2> INSIGHTS </h1>
 				<p>
-				See the <a href="https://github.com/tysonpond/twitch-recommendations/blob/master/EDA%20and%20Network%20Analysis.ipynb"> Jupyter Notebook </a> for a full analysis. We show two select figures below.
+				See the <a href="https://github.com/tysonpond/twitch-recommendations/blob/master/EDA%20and%20Network%20Analysis.ipynb" target="_blank"> Jupyter Notebook </a> for a full analysis. We show two select figures below.
 				</p>
 				<h3> Top games </h3>
 				<p>
 					For each of the top 2k streamers we identify their all-time "primary category" (defined as the category/game with the most total airtime). We plot the frequency of the top 9 categories and bin all other games into "Other".
 				</p>
-				<img id="topGames" src="{{url_for('static', filename='figures/top_games.png')}}" alt="Twitch.tv analytics chart">
+				<div class="img-container">
+					<img id="topGames" src="{{url_for('static', filename='figures/top_games.png')}}" alt="Twitch.tv analytics chart">
+				</div>
 				<h3> Streamer network </h3>
 				<p>
 					We plot a network of connections between a subset of the top Twitch streamers. Nodes represent streamers and edges indicate that they share a substantial fraction of common followers. The network here only contains 369 nodes as opposed to 2k because we've only shown the largest connected component. Nodes size is proportional to the total number of hours watched among their viewers within the last 3 months. Node color represents the streamer's main game. The top two streamers (according to hours watched) for each game are labelled. Labels are "jittered" from their typical position to avoid overlap and black arrows are shown to indicate which nodes the labels belong to.
 				</p>
-				<img id="network" src="{{url_for('static', filename='figures/network.png')}}" alt="Twitch social network">
+				<div class="img-container">
+					<img id="network" src="{{url_for('static', filename='figures/network.png')}}" alt="Twitch social network">
+				</div>
 			</div> <!-- END INSIGHTS -->
 
 
 			<div id="contact" class="section"> <!-- CONTACT -->
-				<h1> CONTACT </h1>
+				<h2> CONTACT </h1>
 				<p>
-				Lorem ipsum Magna enim aliqua laborum tempor ut sed do mollit cillum in commodo irure qui minim laboris et in nostrud est consectetur consequat cillum minim aliqua dolore sed aute ex cillum aliquip voluptate ut velit consequat fugiat elit nulla cillum nulla in sint dolore dolore commodo aliqua aliqua proident consectetur in tempor in tempor non et dolor pariatur dolor enim esse exercitation aute ut adipisicing proident esse reprehenderit aliquip do officia.
+					Hi! My name is Tyson Pond and I developed <span style="color: var(--col1);"> Twitch tastes </span>. To contact me for business inquiries, feature suggestions, or bug reports, you may send me an email at pondtyson@gmail.com or visit my social pages below.
 				</p>
-		    </div> <!-- END CONTACT -->
-
-		    <hr style="height:10px;border-color:black;">
-
-		    <div id="footer" class="section"> <!-- FOOTER -->
-		    	Lorem ipsum Laborum laboris est nulla qui cillum proident pariatur ea qui velit id laborum magna Duis id exercitation esse minim esse fugiat aliquip enim aliqua irure eu pariatur laborum consectetur adipisicing culpa cupidatat labore.
-		    </div> <!-- END FOOTER -->
+				<div id="socials">
+					<a href="https://www.linkedin.com/in/tyson-pond/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+					<a href="https://twitter.com/tyson_c_pond" target="_blank"></a><i class="fab fa-twitter fa-2x"></i></a>
+					<a href="https://github.com/tysonpond" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+				</div>
+		    </div> <!-- END CONTACT -->				
 	</main> <!-- END LAYOUT -->
 </body>
 
