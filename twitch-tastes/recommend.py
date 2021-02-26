@@ -40,7 +40,7 @@ def recommend_by_user_CF(follows_ID, N=5):
     most_sim_user_ID = np.argmax(user_sim_scores)
 
     # make recommendations
-    recs = model.predict(user_ids=[most_sim_user_ID], item_ids=list(range(n_items)), \
+    recs = model.predict(user_ids=int(most_sim_user_ID), item_ids=np.arange(n_items), \
                     user_features=None, item_features=item_features)
     recs = [(decode_streamer[i],x) for i,x in enumerate(recs) if i not in follows_ID] # convert streamer_ID back to streamer_name
     recs = sorted(recs, key=lambda x: -x[1])[:N] # sort by score
