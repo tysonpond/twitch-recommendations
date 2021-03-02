@@ -83,18 +83,8 @@ See `EDA and Network Analysis.ipynb` for a full analysis. We show two select fig
 
 <img src="./figures/network.png" alt="Twitch social network" width="550" height="550"/>
 
-## Recent changes
-- Significant overhaul of Flask app. 
-   - User's query is now stored in dynamic URL, which looks like this "./like/&lt;streamer1&gt;+&lt;streamer2&gt;+..." where streamer1, etc. are the user's "liked" streamers. 
-   - API available, e.g. "./api?streamers=&&lt;streamer1&gt;+&lt;streamer2&gt;+...?limit=20" will return 20 recommendations based on liking streamer1 and streamer2.
-   - Form validation & flashing error message if user's query does not match any streamers in our database.
-   - App UI improved: improved sizing of images, Contact section filled in.
-- Updated streamer `image_url`s since many had went out of date.
-
-## To do (in descending priority)
-- Update requirements.txt with Flask-WTF and WTForms
-- Deploy app to Heroku -- will need to set SECRET_KEY in environment variable
+## Planned improvements/further ideas
+- Update demo in README
 - Case-insensitive queries
 - Improve organization & reproducibility
    - Merge the many, small data files (in .gitignore) and upload to Github
-- Update demo in README
