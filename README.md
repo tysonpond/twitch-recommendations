@@ -49,7 +49,7 @@ Twitch (twitch.tv) is one of the largest live streaming websites. Hosting 3.8M b
 A critical operation for Twitch is to be able to recommend new channels and categories for users to view. Indeed, after making an account and following a few channels, you will find your homepage populated with recommendations. Providing well-received and diverse recommendations (i.e. not entirely based on popularity) is beneficial to user satisfaction and overall website growth and longevity. In this project, we developed a recommendation system to suggest streamers to users.
 
 ### The data
-We began by collecting streamer data. We used Twitch Tracker -- a website which stores data from the Twitch API (dating back to 2015) -- to identify the top 2000 English streamers based on most recent 1-month performance. We collected data on each streamer, such as their recent & career metrics, along with what games they play most frequently.
+We began by collecting streamer data. We used Twitch Tracker &mdash; a website which stores data from the Twitch API (dating back to 2015) &mdash; to identify the top 2000 English streamers based on most recent 1-month performance. We collected data on each streamer, such as their recent & career metrics, along with what games they play most frequently.
 
 After retrieving the top 2000 English streamers, we set aside only the top 200. We then called the Twitch API and collected their most recent 100 followers (totalling to 20k users). Finally, for each of the 20k users we called the Twitch API to retrieve the list of streamers that they follow. After some additional filtering, our final dataset consisted of 10k unique users, 1.9k unique streamers, and 280k user-streamer follower pairs.
 
@@ -87,4 +87,4 @@ See `EDA and Network Analysis.ipynb` for a full analysis. We show two select fig
 - Update demo in README
 - Case-insensitive queries
 - Improve organization & reproducibility
-   - Merge the many, small data files (in .gitignore) and upload to Github
+   - Merge the many, small data files (in .gitignore). Better yet, use a database (probably MongoDB since it's mostly unstructured metadata).
